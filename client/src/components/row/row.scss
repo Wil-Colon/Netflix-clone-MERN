@@ -1,0 +1,90 @@
+.list {
+    width: 100%;
+    margin-top: 10px;
+    // margin-bottom: 15px;
+
+    @media (max-width: 480px) {
+        height: 110px;
+
+        .slick-slide {
+            padding: 0 2px;
+        }
+
+        .slick-slider {
+            width: 5000px;
+            margin-left: 15px;
+        }
+        .slick-track {
+            z-index: 1;
+            height: 80px;
+        }
+    }
+
+    .slick-list {
+        @media (max-width: 480px) {
+            margin-left: 0px;
+        }
+
+        margin-left: 50px;
+        overflow: visible;
+
+        div {
+            padding-top: 2px;
+            padding-bottom: 10px;
+            padding-left: 0px;
+        }
+    }
+
+    .listTitle {
+        color: white;
+        font-size: 20px;
+        font-weight: 500;
+        margin-left: 50px;
+    }
+
+    .next {
+        z-index: 1;
+        position: absolute;
+        font-size: 3em;
+        right: -1px;
+        /* height: 50%; */
+        top: -20px;
+        bottom: 0px;
+        background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #111 100%);
+        border-style: none;
+        color: white;
+        opacity: 0.4;
+        transition: 450ms all;
+
+        @media (max-width: 480px) {
+            right: 93.8%;
+        }
+    }
+
+    .prev {
+        z-index: 1;
+        position: absolute;
+        font-size: 3em;
+        left: 0px;
+        top: -20px;
+        bottom: 0px;
+        background: linear-gradient(-90deg, rgba(0, 0, 0, 0) 0%, #111 100%);
+        border-style: none;
+        color: white;
+        opacity: 0.4;
+        transition: 450ms all;
+        @media (max-width: 480px) {
+            left: -20px;
+        }
+    }
+
+    .prev:hover {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+
+    .next:hover {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+}
