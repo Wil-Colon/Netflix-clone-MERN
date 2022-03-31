@@ -6,7 +6,7 @@ export default function Featured({ type }) {
         <div className="featured">
             {type && (
                 <div className="category">
-                    <span>{type === 'movie' ? 'Movies' : 'Series'}</span>
+                    <span>{type === 'movies' ? 'Movies' : 'Series'}</span>
                     <select name="genre" id="genre">
                         <option>Genre</option>
                         <option value="adventure">Adventure</option>
@@ -51,6 +51,7 @@ export default function Featured({ type }) {
                     </button>
                 </div>
             </div>
+            <div className="banner_fade_bottom" />
         </div>
     );
 }
