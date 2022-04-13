@@ -100,14 +100,15 @@
         position: relative;
         z-index: 2;
         margin-left: 5px;
+        color: gray;
+        font-size: 14px;
+        font-weight: 600;
 
         .icons {
             width: 100%;
             padding-top: 16px;
             margin-bottom: -8px;
-            @media (max-width: 480px) {
-                display: none;
-            }
+            color: white;
 
             .icon {
                 cursor: pointer;
@@ -121,17 +122,23 @@
         .limit {
             border: 1px solid gray;
             padding: 1px 3px;
-            margin: 0 10px;
+            margin: 0 5px;
         }
 
         .desc {
             margin-top: -10px;
-            font-size: 15px;
+            font-size: 13px;
             margin-bottom: 10px;
+            color: white;
 
             @media (max-width: 480px) {
                 margin-top: -18px;
             }
+        }
+
+        .genre {
+            font-size: 14px;
+            color: lightgray;
         }
 
         .itemInfoTop {

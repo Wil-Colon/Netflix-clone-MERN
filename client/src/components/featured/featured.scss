@@ -50,10 +50,14 @@
 
         img {
             width: 400px;
+            @media (max-width: 480px) {
+                width: 300px;
+            }
         }
 
         .desc {
             margin: 20px 0px;
+            width: 250px;
         }
 
         .buttons {

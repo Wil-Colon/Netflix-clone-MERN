@@ -5,32 +5,32 @@ import settings from '../../utils/sliderSettings';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ListMovies from '../listMovies/ListMovies';
-import './listItem.scss';
+import './list.scss';
 
-const ListItem = ({ lists }) => {
+const ListItem = ({ list }) => {
     const [movies, setMovie] = useState([]);
 
     useEffect(() => {
         const fetchMovie = async (id) => {
             const result = await axios.get(`movies/find/${id}`, {
                 headers: {
-                    token: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMjgwMTdmNjgzZTMyMmU4MGIxZmY2NCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY0ODY4MzEwMSwiZXhwIjoxNjQ5MTE1MTAxfQ.3VJ0LOAWAVrQ0sebX9c_OI3vK4gzmnqOHYi02QrVbGU`,
+                    token: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMjgwMTdmNjgzZTMyMmU4MGIxZmY2NCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY0OTcxNzU5NSwiZXhwIjoxNjUwMTQ5NTk1fQ.5oiLov1_ggbYry_BlteGmcRfRpDMqnpUJ0wv-kA2MAM`,
                 },
             });
             setMovie((prevMovie) => [...prevMovie, result.data]);
         };
 
-        lists.content.forEach((id) => {
+        list.content.forEach((id) => {
             fetchMovie(id);
         });
-    }, [lists.content]);
+    }, [list.content]);
 
     return (
         <div className="list">
-            <span className="listTitle">{lists.title}</span>
+            <span className="listTitle">{list.title}</span>
             <Slider {...settings}>
-                {movies.map((movie, i) => (
-                    <ListMovies key={movie._id} movie={movie} />
+                {movies.map((movie) => (
+                    <ListMovies key={movie._id} movie={movie} list={list} />
                 ))}
             </Slider>
         </div>

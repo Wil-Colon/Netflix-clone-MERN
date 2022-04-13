@@ -1,7 +1,7 @@
 import './App.scss';
 import Featured from '../../components/featured/Featured';
 import NavBar from '../../components/navbar/Navbar';
-import ListItem from '../../components/listItem/ListItem';
+import List from '../../components/list/List';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -19,7 +19,7 @@ function App({ type }) {
                     }`,
                     {
                         headers: {
-                            token: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMjgwMTdmNjgzZTMyMmU4MGIxZmY2NCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY0ODY4MzEwMSwiZXhwIjoxNjQ5MTE1MTAxfQ.3VJ0LOAWAVrQ0sebX9c_OI3vK4gzmnqOHYi02QrVbGU',
+                            token: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMjgwMTdmNjgzZTMyMmU4MGIxZmY2NCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY0OTcxNzU5NSwiZXhwIjoxNjUwMTQ5NTk1fQ.5oiLov1_ggbYry_BlteGmcRfRpDMqnpUJ0wv-kA2MAM',
                         },
                     }
                 );
@@ -37,7 +37,7 @@ function App({ type }) {
             <NavBar />
             <Featured type={type} />
             {!isLoading &&
-                lists.map((list, i) => <ListItem key={i} lists={list} />)}
+                lists.map((list) => <List key={list._id} list={list} />)}
         </div>
     );
 }

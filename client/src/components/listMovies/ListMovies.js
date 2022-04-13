@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './listMovies.scss';
+import { Link } from 'react-router-dom';
 import {
     PlayArrow,
     ThumbUpAltOutlined,
@@ -7,11 +8,25 @@ import {
     Add,
 } from '@material-ui/icons';
 
-const ListItem = ({ movie }) => {
+const ListItem = ({ movie, list }) => {
     const [delayHandler, setDelayHandler] = useState(null);
     const [trailerUrl, setTrailerUrl] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
+
+    const [width, setWidth] = useState(window.innerWidth);
+
+    function handleWindowSizeChange() {
+        setWidth(window.innerWidth);
+    }
+    useEffect(() => {
+        window.addEventListener('resize', handleWindowSizeChange);
+        return () => {
+            window.removeEventListener('resize', handleWindowSizeChange);
+        };
+    }, []);
+
+    const isMobile = width <= 768;
 
     const truncate = (str, n) => {
         return str?.length > n ? str.substr(0, n - 1) + '...' : str;
@@ -20,6 +35,9 @@ const ListItem = ({ movie }) => {
     const handleMouseEnter = (movie) => {
         if (trailerUrl) {
             setTrailerUrl('');
+        }
+        if (isOpen) {
+            handleMouseLeave();
         }
         setDelayHandler(
             setTimeout(async () => {
@@ -45,13 +63,10 @@ const ListItem = ({ movie }) => {
             onMouseEnter={() => {
                 handleMouseEnter(movie);
             }}
-            onMouseLeave={() => {
-                handleMouseLeave();
-            }}
-            onClick={() => {
-                handleMouseEnter(movie);
-            }}
             onMouseDown={() => {
+                isMobile && handleMouseEnter(movie);
+            }}
+            onMouseLeave={() => {
                 handleMouseLeave();
             }}
         >
@@ -60,7 +75,7 @@ const ListItem = ({ movie }) => {
                 <div
                     className="listItemLarge"
                     onMouseLeave={() => handleMouseLeave()}
-                    onClick={() => handleMouseLeave()}
+                    onClick={() => isMobile && handleMouseLeave()}
                 >
                     <img src={movie.img} alt={''} />
                     {trailerUrl ? (
@@ -77,7 +92,9 @@ const ListItem = ({ movie }) => {
                     )}
                     <div className="itemInfo">
                         <div className="icons">
-                            <PlayArrow className="icon" />
+                            <Link to={'/watch'} state={movie}>
+                                <PlayArrow className="icon" />
+                            </Link>
                             <Add className="icon" />
                             <ThumbUpAltOutlined className="icon" />
                             <ThumbDownAltOutlined className="icon" />
@@ -87,6 +104,7 @@ const ListItem = ({ movie }) => {
                             <span className="limit">{movie.limit}</span>
                         </div>
                         <div className="desc">{truncate(movie.desc, 90)}</div>
+                        <div className="genre">{list.genre}</div>
                     </div>
                 </div>
             )}
