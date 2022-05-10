@@ -8,7 +8,6 @@ import { MovieContext } from '../../context/movieContext/MovieContext';
 export default function NewProduct() {
     const [movie, setMovie] = useState(null);
     const [img, setImg] = useState(null);
-    const [description, setDescription] = useState(null);
     const [imgTitle, setImgTitle] = useState(null);
     const [imgSm, setImgSm] = useState(null);
     const [trailer, setTrailer] = useState(null);

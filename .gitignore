@@ -14,7 +14,7 @@ client/node_modules
 
 # production
 /build
-
+/Test-files
 # misc
 .DS_Store
 .env.local
