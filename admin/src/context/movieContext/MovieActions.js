@@ -15,7 +15,7 @@ export const deleteMovieStart = () => ({
 });
 export const deleteMovieSuccess = (id) => ({
     type: 'DELETE_MOVIE_SUCCESS',
-    action: id,
+    payload: id,
 });
 export const deleteMovieFailure = () => ({
     type: 'DELETE_MOVIE_FAILURE',

@@ -10,15 +10,16 @@ import storage from '../../firebase';
 export default function Product() {
     const location = useLocation();
     const movie = location.state;
-    const { dispatch } = useContext(MovieContext);
     const movieId = location.state._id;
+    const { dispatch } = useContext(MovieContext);
+
     const [movieUpdated, setMovieUpdated] = useState(null);
     const [trailer, setTrailer] = useState(null);
     const [video, setVideo] = useState(null);
     const [uploaded, setUploaded] = useState(0);
     const [progress, setProgress] = useState(null);
-
     const [isClicked, setIsClicked] = useState(false);
+
     const styles = {
         Active: {
             backgroundColor: 'blue',
@@ -31,6 +32,7 @@ export default function Product() {
     const handleChange = (e) => {
         const value = e.target.value;
         setMovieUpdated({ ...movieUpdated, [e.target.name]: value });
+        console.log(movieUpdated);
     };
 
     const upload = (items) => {
