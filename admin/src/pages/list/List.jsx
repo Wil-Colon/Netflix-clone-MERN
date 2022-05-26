@@ -1,19 +1,17 @@
 import { Link, useLocation } from 'react-router-dom';
 import './list.css';
-import { useState, useContext } from 'react';
-import { updateMovie } from '../../context/movieContext/apiCalls';
-import { MovieContext } from '../../context/movieContext/MovieContext';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import storage from '../../firebase';
+import { useState, useEffect, useContext } from 'react';
+import { updateList } from '../../context/listContext/apiCalls';
+import axios from 'axios';
+import { ListContext } from '../../context/listContext/ListContext';
 
 export default function Product() {
     const location = useLocation();
     const list = location.state;
-    const listId = location.state._id;
-    const { dispatch } = useContext(MovieContext);
-
-    const [listUpdated, setListUpdated] = useState(null);
+    const [listUpdated, setListUpdated] = useState(list);
     const [isClicked, setIsClicked] = useState(false);
+    const [movies, setMovie] = useState([]);
+    const { dispatch } = useContext(ListContext);
 
     const styles = {
         Active: {
@@ -21,22 +19,48 @@ export default function Product() {
         },
         Inactive: {
             backgroundColor: 'grey',
+            cursor: 'default',
         },
     };
+
+    useEffect(() => {
+        const fetchMovie = async (id) => {
+            const result = await axios.get(`/movies/find/${id}`, {
+                headers: {
+                    token:
+                        'Bearer ' +
+                        JSON.parse(localStorage.getItem('user')).accessToken,
+                },
+            });
+            setMovie((prevMovie) => [...prevMovie, result.data]);
+        };
+
+        list.content.forEach((id) => {
+            fetchMovie(id);
+        });
+    }, [list.content]);
 
     const handleChange = (e) => {
         const value = e.target.value;
         setListUpdated({ ...listUpdated, [e.target.name]: value });
-        console.log(listUpdated);
     };
 
-    const handleUpload = (e) => {
-        e.preventDefault();
+    let value;
+    let difference;
+    let contentList = list.content;
+
+    const handleSelect = (e) => {
+        value = Array.from(e.target.selectedOptions, (option) => option.value);
+        const toRemove = new Set(value);
+        difference = contentList.filter((x) => !toRemove.has(x));
+
+        setListUpdated({ ...listUpdated, content: difference });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        updateMovie(listId, listUpdated, dispatch);
+        updateList(list._id, listUpdated, dispatch);
+        console.log(listUpdated);
         setIsClicked(true);
     };
 
@@ -75,32 +99,48 @@ export default function Product() {
             </div>
             <div className="productBottom">
                 <form className="productForm">
-                    <div className="productFormLeft">
-                        <label>List Title</label>
-                        <input
-                            name="title"
-                            type="text"
-                            placeholder={list.title}
-                            onChange={handleChange}
-                            required
-                        />
-                        <label>Type</label>
-                        <input
-                            name="year"
-                            type="text"
-                            placeholder={list.type}
-                            onChange={handleChange}
-                            required
-                        />
-                        <label>Genre</label>
-                        <input
-                            name="genre"
-                            type="text"
-                            placeholder={list.genre}
-                            onChange={handleChange}
-                            required
-                        />
+                    <div className="formLeft">
+                        <div className="productFormLeft">
+                            <label>List Title</label>
+                            <input
+                                name="title"
+                                type="text"
+                                placeholder={list.title}
+                                onChange={handleChange}
+                            />
+                            <label>Type</label>
+                            <select name="type" onChange={handleChange}>
+                                <option>Type</option>
+                                <option value="movie">Movie</option>
+                                <option value="series">Series</option>
+                            </select>
+                            <label>Genre</label>
+                            <input
+                                name="genre"
+                                type="text"
+                                placeholder={list.genre}
+                                onChange={handleChange}
+                            />
+                        </div>
                     </div>
+                    <div className="formRight">
+                        <div className="addProductItem">
+                            <label>Content (Select which to remove)</label>
+                            <select
+                                multiple
+                                name="content"
+                                onChange={handleSelect}
+                                style={{ height: '280px' }}
+                            >
+                                {movies.map((movie) => (
+                                    <option key={movie._id} value={movie._id}>
+                                        {movie.title}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
+
                     <div className="productFormRight">
                         <button
                             className="addProductButton"
@@ -108,7 +148,7 @@ export default function Product() {
                             disabled={isClicked}
                             style={isClicked ? styles.Inactive : styles.Active}
                         >
-                            {!isClicked ? 'Update Movie' : 'Movie updated!'}
+                            {!isClicked ? 'Update List' : 'List updated!'}
                         </button>
                     </div>
                 </form>

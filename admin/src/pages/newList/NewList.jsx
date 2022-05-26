@@ -1,15 +1,25 @@
 import './newList.css';
 import { useContext, useEffect, useState } from 'react';
-import storage from '../../firebase';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { createMovie, getMovies } from '../../context/movieContext/apiCalls';
+import { getMovies } from '../../context/movieContext/apiCalls';
 import { ListContext } from '../../context/listContext/ListContext';
 import { MovieContext } from '../../context/movieContext/MovieContext';
+import { createList } from '../../context/listContext/apiCalls';
 
 export default function NewList() {
     const [list, setList] = useState(null);
     const { dispatch } = useContext(ListContext);
     const { movies, dispatch: dispatchMovie } = useContext(MovieContext);
+    const [isClicked, setIsClicked] = useState(false);
+
+    const styles = {
+        Active: {
+            backgroundColor: 'blue',
+        },
+        Inactive: {
+            backgroundColor: 'grey',
+            cursor: 'default',
+        },
+    };
 
     useEffect(() => {
         getMovies(dispatchMovie);
@@ -25,14 +35,13 @@ export default function NewList() {
             e.target.selectedOptions,
             (option) => option.value
         );
-
         setList({ ...list, [e.target.name]: value });
-
-        console.log(list);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setIsClicked(true);
+        createList(list, dispatch);
     };
 
     return (
@@ -45,7 +54,7 @@ export default function NewList() {
                         <input
                             type="text"
                             id="file"
-                            placeholder="John Wick"
+                            placeholder="New List Name"
                             name="title"
                             onChange={handleChange}
                         />
@@ -86,8 +95,14 @@ export default function NewList() {
                         </select>
                     </div>
                 </div>
-                <button className="addProductButton" onClick={handleSubmit}>
-                    Create
+
+                <button
+                    className="addProductButton"
+                    onClick={handleSubmit}
+                    disabled={isClicked}
+                    style={isClicked ? styles.Inactive : styles.Active}
+                >
+                    {!isClicked ? 'Update Movie' : 'Movie updated!'}
                 </button>
             </form>
         </div>

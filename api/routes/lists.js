@@ -40,6 +40,27 @@ router.delete('/:id', verify, async (req, res) => {
     }
 });
 
+//UPDATE LIST
+//ADMIN ONLY
+//PUT api/lists/:id
+
+router.put('/:id', verify, async (req, res) => {
+    if (req.user.isAdmin) {
+        try {
+            const updatedList = await List.findByIdAndUpdate(
+                req.params.id,
+                { $set: req.body },
+                { new: true }
+            );
+            res.status(200).json(updatedList);
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    } else {
+        res.status(403).json('You are not allowed!');
+    }
+});
+
 //GET WHOLE LIST (used for main login page)
 //Get /api/lists/ (accepts 2 queries type, genre)
 
@@ -64,6 +85,19 @@ router.get('/', verify, async (req, res) => {
         } else {
             list = await List.aggregate([{ $sample: { size: 10 } }]);
         }
+
+        res.status(200).json(list);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+//GET List by list ID
+//Get /api/lists/:id
+
+router.get('/:id', verify, async (req, res) => {
+    try {
+        const list = await List.findById(req.params.id);
 
         res.status(200).json(list);
     } catch (err) {

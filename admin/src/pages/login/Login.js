@@ -6,7 +6,7 @@ import './login.css';
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { isFetching, dispatch } = useContext(AuthContext);
+    const { isFetching, dispatch, error } = useContext(AuthContext);
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -14,28 +14,31 @@ export default function Login() {
     };
 
     return (
-        <div className="login">
-            <form className="loginForm">
-                <input
-                    type="text"
-                    placeholder="email"
-                    className="loginInput"
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="password"
-                    className="loginInput"
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <button
-                    className="loginButton"
-                    onClick={handleLogin}
-                    disabled={isFetching}
-                >
-                    Login
-                </button>
-            </form>
-        </div>
+        <>
+            <div className="login">
+                <form className="loginForm">
+                    <input
+                        type="text"
+                        placeholder="email"
+                        className="loginInput"
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <input
+                        type="text"
+                        placeholder="password"
+                        className="loginInput"
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <button
+                        className="loginButton"
+                        onClick={handleLogin}
+                        disabled={isFetching}
+                    >
+                        Login
+                    </button>
+                    {error && <h3>Error</h3>}
+                </form>
+            </div>
+        </>
     );
 }

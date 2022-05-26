@@ -6,9 +6,12 @@ import { useContext, useEffect } from 'react';
 import { ListContext } from '../../context/listContext/ListContext';
 import { getLists } from '../../context/listContext/apiCalls';
 import { deleteList } from '../../context/listContext/apiCalls';
+import { useState } from 'react';
 
 export default function ListList() {
-    const { lists, dispatch } = useContext(ListContext);
+    const { lists, dispatch, isFetching } = useContext(ListContext);
+
+    console.log(isFetching);
 
     useEffect(() => {
         getLists(dispatch);
@@ -49,15 +52,20 @@ export default function ListList() {
     ];
 
     return (
-        <div className="productList">
-            <DataGrid
-                rows={lists}
-                disableSelectionOnClick
-                columns={columns}
-                pageSize={8}
-                checkboxSelection
-                getRowId={(r) => r._id}
-            />
-        </div>
+        !isFetching && (
+            <div className="productList">
+                <Link to="/newList">
+                    <button className="productAddButton">Create List</button>
+                </Link>
+                <DataGrid
+                    rows={lists}
+                    disableSelectionOnClick
+                    columns={columns}
+                    pageSize={8}
+                    checkboxSelection
+                    getRowId={(r) => r._id}
+                />
+            </div>
+        )
     );
 }
