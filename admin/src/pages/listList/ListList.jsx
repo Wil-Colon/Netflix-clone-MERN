@@ -6,7 +6,6 @@ import { useContext, useEffect } from 'react';
 import { ListContext } from '../../context/listContext/ListContext';
 import { getLists } from '../../context/listContext/apiCalls';
 import { deleteList } from '../../context/listContext/apiCalls';
-import { useState } from 'react';
 
 export default function ListList() {
     const { lists, dispatch, isFetching } = useContext(ListContext);

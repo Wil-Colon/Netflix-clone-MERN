@@ -12,7 +12,6 @@ export default function Product() {
     const movie = location.state;
     const movieId = location.state._id;
     const { dispatch } = useContext(MovieContext);
-
     const [movieUpdated, setMovieUpdated] = useState(null);
     const [trailer, setTrailer] = useState(null);
     const [video, setVideo] = useState(null);
@@ -26,13 +25,13 @@ export default function Product() {
         },
         Inactive: {
             backgroundColor: 'grey',
+            cursor: 'default',
         },
     };
 
     const handleChange = (e) => {
         const value = e.target.value;
         setMovieUpdated({ ...movieUpdated, [e.target.name]: value });
-        console.log(movieUpdated);
     };
 
     const upload = (items) => {

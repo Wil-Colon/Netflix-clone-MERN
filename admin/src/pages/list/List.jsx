@@ -60,7 +60,6 @@ export default function Product() {
     const handleSubmit = (e) => {
         e.preventDefault();
         updateList(list._id, listUpdated, dispatch);
-        console.log(listUpdated);
         setIsClicked(true);
     };
 

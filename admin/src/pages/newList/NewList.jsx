@@ -102,7 +102,7 @@ export default function NewList() {
                     disabled={isClicked}
                     style={isClicked ? styles.Inactive : styles.Active}
                 >
-                    {!isClicked ? 'Update Movie' : 'Movie updated!'}
+                    {!isClicked ? 'Create List' : 'List Created!'}
                 </button>
             </form>
         </div>

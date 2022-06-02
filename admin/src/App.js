@@ -38,7 +38,6 @@ function App() {
                             <Route exact path="/">
                                 <Home />
                             </Route>
-
                             <Route path="/users">
                                 <UserList />
                             </Route>
@@ -60,7 +59,6 @@ function App() {
                             <Route path="/lists">
                                 <ListList />
                             </Route>
-
                             <Route path="/list/:listId">
                                 <List />
                             </Route>
