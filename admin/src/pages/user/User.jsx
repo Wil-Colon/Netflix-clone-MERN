@@ -1,3 +1,4 @@
+import './user.css';
 import {
     CalendarToday,
     MailOutline,
@@ -6,25 +7,52 @@ import {
     Person,
 } from '@material-ui/icons';
 import { useLocation } from 'react-router-dom';
-import './user.css';
 import { useState, useContext } from 'react';
 import { updateUser } from '../../context/userContext/apiCalls';
 import { UserContext } from '../../context/userContext/UserContext';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import storage from '../../firebase';
 
 export default function User() {
+    const [formData, setFormData] = useState(null);
+    const [isClicked, setIsclicked] = useState(false);
+    const [isClicked2, setIsclicked2] = useState(false);
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [progress, setProgress] = useState(0);
+    const { dispatch } = useContext(UserContext);
     const location = useLocation();
     const { _id, createdAt, email, profilePic, username, isAdmin } =
         location.state;
-    const { dispatch } = useContext(UserContext);
-
     const date = createdAt;
     const [newDate] = date.split('T');
 
-    const [formData, setFormData] = useState(null);
-    const [isClicked, setIsclicked] = useState(false);
-
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleUpload = (e) => {
+        e.preventDefault(e);
+        const fileName = new Date().getTime() + selectedFile.name;
+        const itemsRef = ref(storage, `users/${fileName}`);
+        const uploadTask = uploadBytesResumable(itemsRef, selectedFile);
+
+        uploadTask.on(
+            'state_changed',
+            (snapshot) => {
+                const progress =
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                setProgress(Math.floor(progress));
+            },
+            (err) => {
+                console.log(err);
+            },
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+                    setFormData({ ...formData, profilePic: url });
+                });
+            }
+        );
+        setIsclicked2(true);
     };
 
     const handleSubmit = (e) => {
@@ -115,12 +143,32 @@ export default function User() {
                                     alt=""
                                 />
                                 <label htmlFor="file">
-                                    <Publish className="userUpdateIcon" />
+                                    {selectedFile ? (
+                                        <button
+                                            className="userUpdateButton"
+                                            onClick={(e) => handleUpload(e)}
+                                            style={
+                                                isClicked2
+                                                    ? styles.Inactive
+                                                    : styles.Active
+                                            }
+                                        >
+                                            {!isClicked2
+                                                ? `Click to Upload`
+                                                : `${progress}% uploaded!`}
+                                        </button>
+                                    ) : (
+                                        <Publish className="userUpdateIcon" />
+                                    )}
                                 </label>
                                 <input
                                     type="file"
                                     id="file"
                                     style={{ display: 'none' }}
+                                    name="profilePic"
+                                    onChange={(e) => {
+                                        setSelectedFile(e.target.files[0]);
+                                    }}
                                 />
                             </div>
                             <button

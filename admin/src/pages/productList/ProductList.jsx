@@ -2,7 +2,7 @@ import './productList.css';
 import { DataGrid } from '@material-ui/data-grid';
 import { DeleteOutline } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { MovieContext } from '../../context/movieContext/MovieContext';
 import { deleteMovie, getMovies } from '../../context/movieContext/apiCalls';
 
@@ -67,6 +67,9 @@ export default function ProductList() {
 
     return (
         <div className="productList">
+            <Link to="/newproduct">
+                <button className="productAddButton">Create</button>
+            </Link>
             <DataGrid
                 rows={movies}
                 disableSelectionOnClick
