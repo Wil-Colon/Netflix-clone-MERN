@@ -9,7 +9,7 @@ const MovieReducer = (state, action) => {
         case 'GET_MOVIES_SUCCESS':
             return {
                 movies: action.payload,
-                isFetching: true,
+                isFetching: false,
                 error: false,
             };
         case 'GET_MOVIES_FAILURE':

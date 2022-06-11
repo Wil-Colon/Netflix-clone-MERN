@@ -4,8 +4,18 @@ import storage from '../../firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { createMovie } from '../../context/movieContext/apiCalls';
 import { MovieContext } from '../../context/movieContext/MovieContext';
+import { useEffect } from 'react';
 
 export default function NewProduct() {
+    const styles = {
+        Active: {
+            backgroundColor: 'blue',
+        },
+        Inactive: {
+            cursor: 'default',
+        },
+    };
+
     const [movie, setMovie] = useState(null);
     const [img, setImg] = useState(null);
     const [imgTitle, setImgTitle] = useState(null);
@@ -14,7 +24,26 @@ export default function NewProduct() {
     const [video, setVideo] = useState(null);
     const [uploaded, setUploaded] = useState(0);
 
+    const [allowUload, setAllowUpload] = useState(false);
+
     const { dispatch } = useContext(MovieContext);
+
+    useEffect(() => {
+        if (
+            movie === null ||
+            trailer === null ||
+            video === null ||
+            img === null ||
+            imgTitle === null ||
+            imgSm === null ||
+            movie.desc === undefined ||
+            movie.title === undefined
+        ) {
+            setAllowUpload(false);
+        } else {
+            setAllowUpload(true);
+        }
+    }, [img, imgSm, imgTitle, movie, trailer, video]);
 
     const handleChange = (e) => {
         const value = e.target.value;
@@ -103,6 +132,7 @@ export default function NewProduct() {
                         placeholder="John Wick"
                         name="title"
                         onChange={handleChange}
+                        required
                     />
                 </div>
                 <div className="addProductItem">
@@ -111,8 +141,9 @@ export default function NewProduct() {
                         type="text"
                         id="file"
                         placeholder="Movie description"
-                        name="description"
+                        name="desc"
                         onChange={handleChange}
+                        required
                     />
                 </div>
                 <div className="addProductItem">
@@ -183,7 +214,11 @@ export default function NewProduct() {
                         Create
                     </button>
                 ) : (
-                    <button className="addProductButton" onClick={handleUpload}>
+                    <button
+                        className="addProductButton"
+                        onClick={handleUpload}
+                        disabled={!allowUload}
+                    >
                         Upload
                     </button>
                 )}

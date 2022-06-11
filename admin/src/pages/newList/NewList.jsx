@@ -4,12 +4,14 @@ import { getMovies } from '../../context/movieContext/apiCalls';
 import { ListContext } from '../../context/listContext/ListContext';
 import { MovieContext } from '../../context/movieContext/MovieContext';
 import { createList } from '../../context/listContext/apiCalls';
+import { useHistory } from 'react-router-dom';
 
 export default function NewList() {
     const [list, setList] = useState(null);
     const { dispatch } = useContext(ListContext);
     const { movies, dispatch: dispatchMovie } = useContext(MovieContext);
     const [isClicked, setIsClicked] = useState(false);
+    const history = useHistory();
 
     const styles = {
         Active: {
@@ -42,6 +44,7 @@ export default function NewList() {
         e.preventDefault();
         setIsClicked(true);
         createList(list, dispatch);
+        history.push('/lists');
     };
 
     return (

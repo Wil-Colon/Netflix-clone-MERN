@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import './list.css';
 import { useState, useEffect, useContext } from 'react';
 import { updateList } from '../../context/listContext/apiCalls';
@@ -12,6 +12,7 @@ export default function Product() {
     const [isClicked, setIsClicked] = useState(false);
     const [movies, setMovie] = useState([]);
     const { dispatch } = useContext(ListContext);
+    const history = useHistory();
 
     const styles = {
         Active: {
@@ -61,6 +62,7 @@ export default function Product() {
         e.preventDefault();
         updateList(list._id, listUpdated, dispatch);
         setIsClicked(true);
+        history.push('/lists');
     };
 
     return (
@@ -74,12 +76,14 @@ export default function Product() {
             <div className="productTop">
                 <div className="productTopRight">
                     <div className="productInfoTop">
-                        <span className="productName">{list.title}</span>
+                        <span className="productName">{list?.title}</span>
                     </div>
                     <div className="productInfoBottom">
                         <div className="productInfoItem">
                             <span className="productInfoKey">id:</span>
-                            <span className="productInfoValue">{list._id}</span>
+                            <span className="productInfoValue">
+                                {list?._id}
+                            </span>
                         </div>
                         <div className="productInfoItem">
                             <span className="productInfoKey">genre:</span>
@@ -104,7 +108,7 @@ export default function Product() {
                             <input
                                 name="title"
                                 type="text"
-                                placeholder={list.title}
+                                placeholder={list?.title}
                                 onChange={handleChange}
                             />
                             <label>Type</label>
@@ -131,11 +135,18 @@ export default function Product() {
                                 onChange={handleSelect}
                                 style={{ height: '280px' }}
                             >
-                                {movies.map((movie) => (
-                                    <option key={movie._id} value={movie._id}>
-                                        {movie.title}
-                                    </option>
-                                ))}
+                                {movies.map((movie) =>
+                                    movie !== null ? (
+                                        <option
+                                            key={movie._id}
+                                            value={movie._id}
+                                        >
+                                            {movie.title}
+                                        </option>
+                                    ) : (
+                                        <option>empty</option>
+                                    )
+                                )}
                             </select>
                         </div>
                     </div>

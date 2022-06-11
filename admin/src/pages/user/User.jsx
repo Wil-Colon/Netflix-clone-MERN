@@ -12,8 +12,48 @@ import { updateUser } from '../../context/userContext/apiCalls';
 import { UserContext } from '../../context/userContext/UserContext';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import storage from '../../firebase';
+import { CircularProgress } from '@material-ui/core';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 export default function User() {
+    function CircularProgressWithLabel(props) {
+        return (
+            <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+                <CircularProgress variant="determinate" {...props} />
+                <Box
+                    sx={{
+                        top: 0,
+                        left: 0,
+                        bottom: 0,
+                        right: 0,
+                        position: 'absolute',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}
+                >
+                    <Typography
+                        variant="caption"
+                        component="div"
+                        color="text.secondary"
+                    >
+                        {`${Math.round(props.value)}%`}
+                    </Typography>
+                </Box>
+            </Box>
+        );
+    }
+    const styles = {
+        Active: {
+            backgroundColor: 'blue',
+        },
+        Inactive: {
+            cursor: 'default',
+            backgroundColor: 'grey',
+        },
+    };
+
     const [formData, setFormData] = useState(null);
     const [isClicked, setIsclicked] = useState(false);
     const [isClicked2, setIsclicked2] = useState(false);
@@ -59,16 +99,6 @@ export default function User() {
         e.preventDefault(e);
         updateUser(_id, formData, dispatch);
         setIsclicked(true);
-    };
-
-    const styles = {
-        Active: {
-            backgroundColor: 'blue',
-        },
-        Inactive: {
-            backgroundColor: 'grey',
-            cursor: 'default',
-        },
     };
 
     return (
@@ -153,9 +183,13 @@ export default function User() {
                                                     : styles.Active
                                             }
                                         >
-                                            {!isClicked2
-                                                ? `Click to Upload`
-                                                : `${progress}% uploaded!`}
+                                            {!isClicked2 ? (
+                                                `Click to Upload`
+                                            ) : (
+                                                <CircularProgressWithLabel
+                                                    value={progress}
+                                                />
+                                            )}
                                         </button>
                                     ) : (
                                         <Publish className="userUpdateIcon" />

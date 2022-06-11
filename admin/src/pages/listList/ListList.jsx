@@ -6,11 +6,11 @@ import { useContext, useEffect } from 'react';
 import { ListContext } from '../../context/listContext/ListContext';
 import { getLists } from '../../context/listContext/apiCalls';
 import { deleteList } from '../../context/listContext/apiCalls';
+import { CircularProgress } from '@material-ui/core';
+import ResponsiveDialog from '../../components/responsiveDailog/ResponsiveDialog';
 
 export default function ListList() {
     const { lists, dispatch, isFetching } = useContext(ListContext);
-
-    console.log(isFetching);
 
     useEffect(() => {
         getLists(dispatch);
@@ -40,9 +40,9 @@ export default function ListList() {
                         >
                             <button className="productListEdit">Edit</button>
                         </Link>
-                        <DeleteOutline
-                            className="productListDelete"
-                            onClick={() => handleDelete(params.row._id)}
+                        <ResponsiveDialog
+                            handleDelete={() => handleDelete(params.row._id)}
+                            type={'list'}
                         />
                     </>
                 );
@@ -51,11 +51,11 @@ export default function ListList() {
     ];
 
     return (
-        !isFetching && (
-            <div className="productList">
-                <Link to="/newList">
-                    <button className="productAddButton">Create List</button>
-                </Link>
+        <div className="productList">
+            <Link to="/newList">
+                <button className="productAddButton">Create List</button>
+            </Link>
+            {lists.length > 0 ? (
                 <DataGrid
                     rows={lists}
                     disableSelectionOnClick
@@ -64,7 +64,17 @@ export default function ListList() {
                     checkboxSelection
                     getRowId={(r) => r._id}
                 />
-            </div>
-        )
+            ) : (
+                <CircularProgress
+                    style={{
+                        width: '40px',
+                        height: '40px',
+                        display: 'block',
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                    }}
+                />
+            )}
+        </div>
     );
 }

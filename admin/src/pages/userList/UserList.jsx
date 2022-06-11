@@ -1,11 +1,11 @@
 import './userList.css';
 import { DataGrid } from '@material-ui/data-grid';
-import { DeleteOutline } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { UserContext } from '../../context/userContext/UserContext';
 import { useContext } from 'react';
 import { getUsers, deleteUser } from '../../context/userContext/apiCalls';
+import ResponsiveDailog from '../../components/responsiveDailog/ResponsiveDialog';
 
 export default function UserList() {
     const { users, isFetching, dispatch } = useContext(UserContext);
@@ -14,12 +14,12 @@ export default function UserList() {
         getUsers(dispatch);
     }, [dispatch]);
 
-    const defaultPic =
-        'https://e7.pngegg.com/pngimages/103/590/png-clipart-computer-icons-user-profile-avatar-heroes-monochrome.png';
-
     const handleDelete = (id) => {
         deleteUser(id, dispatch);
     };
+
+    const defaultPic =
+        'https://e7.pngegg.com/pngimages/103/590/png-clipart-computer-icons-user-profile-avatar-heroes-monochrome.png';
 
     const columns = [
         { field: '_id', headerName: 'ID', width: 150 },
@@ -60,9 +60,9 @@ export default function UserList() {
                         >
                             <button className="userListEdit">Edit</button>
                         </Link>
-                        <DeleteOutline
-                            className="userListDelete"
-                            onClick={() => handleDelete(params.row._id)}
+                        <ResponsiveDailog
+                            handleDelete={() => handleDelete(params.row._id)}
+                            type={'user'}
                         />
                     </>
                 );
