@@ -10,7 +10,7 @@ import { CircularProgress } from '@material-ui/core';
 import ResponsiveDialog from '../../components/responsiveDailog/ResponsiveDialog';
 
 export default function ListList() {
-    const { lists, dispatch, isFetching } = useContext(ListContext);
+    const { lists, dispatch } = useContext(ListContext);
 
     useEffect(() => {
         getLists(dispatch);

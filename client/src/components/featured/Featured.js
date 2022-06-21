@@ -3,16 +3,15 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import './featured.scss';
 
-export default function Featured({ type }) {
+export default function Featured({ type, setGenre }) {
     const [content, setContent] = useState({});
 
     useEffect(() => {
-        console.log(type);
         const getRandomContent = async () => {
             try {
                 const res = await axios.get(`movies/random?type=${type}`, {
                     headers: {
-                        token: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMjgwMTdmNjgzZTMyMmU4MGIxZmY2NCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY0OTcxNzU5NSwiZXhwIjoxNjUwMTQ5NTk1fQ.5oiLov1_ggbYry_BlteGmcRfRpDMqnpUJ0wv-kA2MAM`,
+                        token: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMjgwMTdmNjgzZTMyMmU4MGIxZmY2NCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1NTc3NjQzNywiZXhwIjoxNjU2MjA4NDM3fQ.s6wIbdAzJtTzxuluzx_gOE17h1u_qmlUn4e31i_lKKo`,
                     },
                 });
                 setContent(...res.data);
@@ -26,13 +25,17 @@ export default function Featured({ type }) {
         <div className="featured">
             {type && (
                 <div className="category">
-                    <span>{type === 'movies' ? 'Movies' : 'Series'}</span>
-                    <select name="genre" id="genre">
-                        <option>Genre</option>
-                        <option value="adventure">Adventure</option>
+                    <span>{type === 'movie' ? 'Movies' : 'Series'}</span>
+                    <select
+                        name="genre"
+                        id="genre"
+                        onChange={(e) => setGenre(e.target.value)}
+                    >
+                        <option value="">Genre</option>
+                        <option value="action">Action</option>
                         <option value="comedy">Comedy</option>
                         <option value="crime">Crime</option>
-                        <option value="fantasy">Fantasy</option>
+                        <option value="mystery">Mystery</option>
                         <option value="historical">Historical</option>
                         <option value="horror">Horror</option>
                         <option value="romance">Romance</option>
@@ -48,10 +51,7 @@ export default function Featured({ type }) {
             <img src={content.img} alt="" />
             <div className="info">
                 <img src={content.desc} alt="" />
-                <span className="desc">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Vitae adipisci repellendus eum quasi illo, velit numquam,
-                </span>
+                <span className="desc">{content.desc}</span>
                 <div className="buttons">
                     <button className="play">
                         <PlayArrow />

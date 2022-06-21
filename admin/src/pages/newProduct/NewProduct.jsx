@@ -9,9 +9,10 @@ import { useEffect } from 'react';
 export default function NewProduct() {
     const styles = {
         Active: {
-            backgroundColor: 'blue',
+            backgroundColor: 'red',
         },
         Inactive: {
+            backgroundColor: 'grey',
             cursor: 'default',
         },
     };
@@ -23,8 +24,10 @@ export default function NewProduct() {
     const [trailer, setTrailer] = useState(null);
     const [video, setVideo] = useState(null);
     const [uploaded, setUploaded] = useState(0);
-
-    const [allowUload, setAllowUpload] = useState(false);
+    const [progress, setProgress] = useState(0);
+    const [created, setCreated] = useState(false);
+    const [allowUpload, setAllowUpload] = useState(false);
+    const [disabledGrey, setDisabledGrey] = useState(false);
 
     const { dispatch } = useContext(MovieContext);
 
@@ -61,6 +64,7 @@ export default function NewProduct() {
                     const progress =
                         (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                     console.log('upload is ' + progress + '% done.');
+                    setProgress(Math.floor(progress));
                 },
                 (err) => {
                     console.log(err);
@@ -79,18 +83,24 @@ export default function NewProduct() {
 
     const handleUpload = (e) => {
         e.preventDefault();
-        upload([
-            { file: img, label: 'img' },
-            { file: imgTitle, label: 'imgTitle' },
-            { file: imgSm, label: 'imgSm' },
-            { file: trailer, label: 'trailer' },
-            { file: video, label: 'video' },
-        ]);
+        if (allowUpload === true) {
+            upload([
+                { file: img, label: 'img' },
+                { file: imgTitle, label: 'imgTitle' },
+                { file: imgSm, label: 'imgSm' },
+                { file: trailer, label: 'trailer' },
+                { file: video, label: 'video' },
+            ]);
+            return;
+        }
+        window.alert('Please fill all required fields!');
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         createMovie(movie, dispatch);
+        setCreated(true);
+        setDisabledGrey(true);
     };
 
     return (
@@ -210,16 +220,17 @@ export default function NewProduct() {
                     />
                 </div>
                 {uploaded === 5 ? (
-                    <button className="addProductButton" onClick={handleSubmit}>
-                        Create
-                    </button>
-                ) : (
                     <button
                         className="addProductButton"
-                        onClick={handleUpload}
-                        disabled={!allowUload}
+                        onClick={handleSubmit}
+                        style={!disabledGrey ? styles.Active : styles.Inactive}
+                        disabled={created}
                     >
-                        Upload
+                        {!created ? 'Create' : 'All done!'}
+                    </button>
+                ) : (
+                    <button className="addProductButton" onClick={handleUpload}>
+                        {progress === 0 ? 'Upload' : `${progress}% done`}
                     </button>
                 )}
             </form>
