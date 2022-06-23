@@ -3,6 +3,8 @@ import Home from './pages/home/Home';
 import Register from './pages/register/Register';
 import Watch from './pages/watch/Watch';
 import Login from './pages/login/Login';
+import { useContext } from 'react';
+import { AuthContext } from './context/authContext/AuthContext';
 import {
     BrowserRouter as Router,
     Routes,
@@ -11,7 +13,9 @@ import {
 } from 'react-router-dom';
 
 const App = () => {
-    const user = true;
+    // const user = true;
+    const { user } = useContext(AuthContext);
+    console.log(user);
     return (
         <Router>
             <Routes>

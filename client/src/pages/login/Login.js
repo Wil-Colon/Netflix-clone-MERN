@@ -1,6 +1,31 @@
 import './login.scss';
+import { useState, useContext } from 'react';
+import { login } from '../../context/authContext/apiCalls';
+import { AuthContext } from '../../context/authContext/AuthContext';
+import { useForm } from 'react-hook-form';
 
 const Login = () => {
+    const { dispatch, user } = useContext(AuthContext);
+    const [isClicked, setIsClicked] = useState(false);
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+    });
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const onSubmit = () => {
+        login(formData, dispatch);
+        setIsClicked(true);
+    };
+
     return (
         <div className="login">
             <div className="top">
@@ -13,11 +38,38 @@ const Login = () => {
                 </div>
             </div>
             <div className="container">
-                <form>
+                <form onSubmit={handleSubmit(onSubmit)}>
                     <h1>Sign In</h1>
-                    <input type="email" placeholder="Email or Phone number" />
-                    <input type="password" placeholder="Password" />
-                    <button className="loginButton">Sign In</button>
+                    <input
+                        {...register('email', { required: true })}
+                        onChange={handleChange}
+                        name="email"
+                        type="email"
+                        placeholder="Email or Phone number"
+                        value={formData.email}
+                    />
+                    {errors.email && (
+                        <p style={{ color: 'red' }}>Email is required.</p>
+                    )}
+                    <input
+                        {...register('password', { required: true })}
+                        onChange={handleChange}
+                        name="password"
+                        type="password"
+                        placeholder="Password"
+                        value={formData.password}
+                    />
+                    {errors.password && (
+                        <p style={{ color: 'red' }}>Password is required.</p>
+                    )}
+                    <button type="submit" className="loginButton">
+                        Sign In
+                    </button>
+                    {user === null && isClicked && (
+                        <p style={{ color: 'red' }}>
+                            Incorrect password or email
+                        </p>
+                    )}
                     <span>
                         New to Netflix? <b>Sign up now.</b>
                     </span>
