@@ -6,7 +6,7 @@ import { logout } from '../../context/authContext/AuthAction';
 import './navbar.scss';
 
 const Navbar = () => {
-    const { dispatch } = useContext(AuthContext);
+    const { dispatch, user } = useContext(AuthContext);
     const [isScrolled, setIsScrolled] = useState(false);
     const navigate = useNavigate();
 
@@ -36,12 +36,9 @@ const Navbar = () => {
                 </div>
                 <div className="right">
                     <Search className="icon" />
-                    <span>KID</span>
+                    <span>{user.username}</span>
                     <Notifications className="icon" />
-                    <img
-                        src="https://images.pexels.com/photos/6899260/pexels-photo-6899260.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-                        alt=""
-                    />
+                    <img src={user.profilePic} alt="" />
                     <div className="profile">
                         <ArrowDropDown className="icon" />
                         <div className="options">

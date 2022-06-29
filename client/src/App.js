@@ -13,9 +13,8 @@ import {
 } from 'react-router-dom';
 
 const App = () => {
-    // const user = true;
     const { user } = useContext(AuthContext);
-    console.log(user);
+
     return (
         <Router>
             <Routes>

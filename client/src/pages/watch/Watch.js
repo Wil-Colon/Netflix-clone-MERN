@@ -16,13 +16,14 @@ export default function Watch() {
                     Home
                 </div>
             </Link>
-            <iframe
+            <video
                 title="movie"
                 className="video"
                 autoPlay
                 progress
                 controls
                 src={movie}
+                type="video/mp4"
             />
         </div>
     );

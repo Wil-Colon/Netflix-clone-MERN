@@ -1,21 +1,49 @@
 import './register.scss';
-import React, { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { AuthContext } from '../../context/authContext/AuthContext';
+import { registerUser } from '../../context/authContext/apiCalls';
 
 const Register = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const { dispatch, error } = useContext(AuthContext);
+    const navigate = useNavigate();
 
-    const emailRef = useRef();
-    const passwordRef = useRef();
+    const [formData, setFormData] = useState({
+        username: '',
+        email: '',
+        password: '',
+    });
 
-    const handleStart = () => {
-        setEmail(emailRef.current.value);
+    const [userInfo, setUserInfo] = useState({
+        username: '',
+        email: '',
+        password: '',
+    });
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleFinish = () => {
-        setPassword(passwordRef.current.value);
+    const onSubmit1 = () => {
+        setUserInfo(formData);
     };
+
+    const onSubmit2 = () => {
+        setUserInfo(formData);
+    };
+
+    const registerNewUser = () => {
+        registerUser(formData, dispatch);
+        navigate('/login', { state: { msg: 'New User Registered!' } });
+    };
+
     return (
         <div className="register">
             <div className="top">
@@ -37,35 +65,86 @@ const Register = () => {
                     Ready to watch? Enter your email to create or restart
                     membership.
                 </p>
-                {!email ? (
-                    <div className="input">
+                {!userInfo.username && !userInfo.email ? (
+                    <form className="input" onSubmit={handleSubmit(onSubmit1)}>
                         <input
+                            {...register('username', {
+                                required: true,
+                                minLength: 5,
+                                maxLength: 15,
+                            })}
+                            type="text"
+                            placeholder="enter a username"
+                            name="username"
+                            onChange={handleChange}
+                            value={formData.username}
+                        />
+                        <button className="registerButton">Start Here</button>
+                    </form>
+                ) : !userInfo.email ? (
+                    <form className="input" onSubmit={handleSubmit(onSubmit2)}>
+                        <input
+                            {...register('email', {
+                                required: true,
+                            })}
                             type="email"
                             placeholder="email address"
-                            ref={emailRef}
+                            name="email"
+                            onChange={handleChange}
+                            value={formData.email}
                         />
-                        <button
-                            className="registerButton"
-                            onClick={handleStart}
-                        >
-                            Get Started
-                        </button>
-                    </div>
+                        <button className="registerButton">Get Started</button>
+                    </form>
                 ) : (
-                    <form className="input">
+                    <form
+                        className="input"
+                        onSubmit={handleSubmit(registerNewUser)}
+                    >
                         <input
+                            {...register('password', {
+                                required: true,
+                                minLength: 5,
+                                maxLength: 15,
+                            })}
                             type="password"
                             placeholder="password"
-                            ref={passwordRef}
+                            name="password"
+                            onChange={handleChange}
+                            value={formData.password}
                         />
-                        <button
-                            className="registerButton"
-                            onClick={handleFinish}
-                        >
+                        <button type="submit" className="registerButton">
                             Start
                         </button>
                     </form>
                 )}
+                {errors.username && (
+                    <span style={{ color: 'red' }}>
+                        {errors.username?.type === 'minLength'
+                            ? 'Username must be more then 5 characters'
+                            : errors.username?.type === 'maxLength'
+                            ? 'Username must be no longer then 15 characters'
+                            : 'Please enter a username'}
+                    </span>
+                )}
+                {errors.email && (
+                    <span style={{ color: 'red' }}>
+                        Please enter a valid Email.
+                    </span>
+                )}
+                {errors.password && (
+                    <span style={{ color: 'red' }}>
+                        {errors.password?.type === 'minLength'
+                            ? 'Password must be at least 5 characters long'
+                            : errors.password?.type === 'maxLength'
+                            ? 'Password must be no longer then 15 characters'
+                            : 'Password Required'}
+                    </span>
+                )}
+                <span style={{ color: 'red' }}>
+                    {' '}
+                    {console.log(error)}
+                    {error && <p>user already exists</p>}
+                </span>
             </div>
         </div>
     );

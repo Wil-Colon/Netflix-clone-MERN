@@ -11,7 +11,10 @@ export default function Featured({ type, setGenre }) {
             try {
                 const res = await axios.get(`movies/random?type=${type}`, {
                     headers: {
-                        token: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMjgwMTdmNjgzZTMyMmU4MGIxZmY2NCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1NTc3NjQzNywiZXhwIjoxNjU2MjA4NDM3fQ.s6wIbdAzJtTzxuluzx_gOE17h1u_qmlUn4e31i_lKKo`,
+                        token:
+                            'Bearer ' +
+                            JSON.parse(localStorage.getItem('user'))
+                                .accessToken,
                     },
                 });
                 setContent(...res.data);
@@ -34,9 +37,10 @@ export default function Featured({ type, setGenre }) {
                         <option value="">Genre</option>
                         <option value="action">Action</option>
                         <option value="comedy">Comedy</option>
+                        <option value="drama">Drama</option>
+                        <option value="history">Historical</option>
                         <option value="crime">Crime</option>
                         <option value="mystery">Mystery</option>
-                        <option value="historical">Historical</option>
                         <option value="horror">Horror</option>
                         <option value="romance">Romance</option>
                         <option value="sci-fi">Sci-fi</option>

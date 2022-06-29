@@ -3,8 +3,10 @@ import { useState, useContext } from 'react';
 import { login } from '../../context/authContext/apiCalls';
 import { AuthContext } from '../../context/authContext/AuthContext';
 import { useForm } from 'react-hook-form';
+import { useLocation } from 'react-router-dom';
 
 const Login = () => {
+    const { state } = useLocation();
     const { dispatch, user } = useContext(AuthContext);
     const [isClicked, setIsClicked] = useState(false);
     const [formData, setFormData] = useState({
@@ -22,8 +24,8 @@ const Login = () => {
     };
 
     const onSubmit = () => {
-        login(formData, dispatch);
         setIsClicked(true);
+        login(formData, dispatch);
     };
 
     return (
@@ -37,8 +39,10 @@ const Login = () => {
                     />
                 </div>
             </div>
+
             <div className="container">
                 <form onSubmit={handleSubmit(onSubmit)}>
+                    {state && <p style={{ color: 'red' }}>{state.msg}</p>}
                     <h1>Sign In</h1>
                     <input
                         {...register('email', { required: true })}

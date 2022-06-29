@@ -29,27 +29,31 @@ export default function WidgetSm() {
         <div className="widgetSm">
             <span className="widgetSmTitle">New Join Members</span>
             <ul className="widgetSmList">
-                {newUsers.map((user, i) => (
-                    <li key={i} className="widgetSmListItem">
-                        <img
-                            src={
-                                user.profilePic ||
-                                'https://ih0.redbubble.net/image.618427277.3222/flat,1000x1000,075,f.u2.jpg'
-                            }
-                            alt=""
-                            className="widgetSmImg"
-                        />
-                        <div className="widgetSmUser">
-                            <span className="widgetSmUsername">
-                                {user.username}
-                            </span>
-                        </div>
-                        <button className="widgetSmButton">
-                            <Visibility className="widgetSmIcon" />
-                            Display
-                        </button>
-                    </li>
-                ))}
+                {newUsers.length > 0 ? (
+                    newUsers.map((user, i) => (
+                        <li key={i} className="widgetSmListItem">
+                            <img
+                                src={
+                                    user.profilePic ||
+                                    'https://ih0.redbubble.net/image.618427277.3222/flat,1000x1000,075,f.u2.jpg'
+                                }
+                                alt=""
+                                className="widgetSmImg"
+                            />
+                            <div className="widgetSmUser">
+                                <span className="widgetSmUsername">
+                                    {user.username}
+                                </span>
+                            </div>
+                            <button className="widgetSmButton">
+                                <Visibility className="widgetSmIcon" />
+                                Display
+                            </button>
+                        </li>
+                    ))
+                ) : (
+                    <p>Loading...</p>
+                )}
             </ul>
         </div>
     );
