@@ -2,10 +2,17 @@ import { InfoOutlined, PlayArrow } from '@material-ui/icons';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import './featured.scss';
+import { Link } from 'react-router-dom';
 
 export default function Featured({ type, setGenre }) {
     const [content, setContent] = useState({});
+    const truncate = (str, n) => {
+        return str?.length > n ? str.substr(0, n - 1) + '...' : str;
+    };
 
+    if (type === 'series') {
+        type = 'Series';
+    }
     useEffect(() => {
         const getRandomContent = async () => {
             try {
@@ -24,6 +31,7 @@ export default function Featured({ type, setGenre }) {
         };
         getRandomContent();
     }, [type]);
+
     return (
         <div className="featured">
             {type && (
@@ -35,10 +43,10 @@ export default function Featured({ type, setGenre }) {
                         onChange={(e) => setGenre(e.target.value)}
                     >
                         <option value="">Genre</option>
-                        <option value="action">Action</option>
-                        <option value="comedy">Comedy</option>
-                        <option value="drama">Drama</option>
-                        <option value="history">Historical</option>
+                        <option value="Action">Action</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Drama">Drama</option>
+                        <option value="History">Historical</option>
                         <option value="crime">Crime</option>
                         <option value="mystery">Mystery</option>
                         <option value="horror">Horror</option>
@@ -54,12 +62,15 @@ export default function Featured({ type, setGenre }) {
             )}
             <img src={content.img} alt="" />
             <div className="info">
+                <h1 className="banner_title">{content.title}</h1>
                 <img src={content.desc} alt="" />
-                <span className="desc">{content.desc}</span>
+                <span className="desc">{truncate(content.desc, 100)}</span>
                 <div className="buttons">
                     <button className="play">
                         <PlayArrow />
-                        <span>Play</span>
+                        <Link to="/watch" state={content}>
+                            <span className="playButton">Play</span>{' '}
+                        </Link>
                     </button>
                     <button className="more">
                         <InfoOutlined />

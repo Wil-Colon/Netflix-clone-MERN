@@ -1,5 +1,5 @@
 import './login.scss';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { login } from '../../context/authContext/apiCalls';
 import { AuthContext } from '../../context/authContext/AuthContext';
 import { useForm } from 'react-hook-form';

@@ -62,7 +62,6 @@ export default function Product() {
         e.preventDefault();
         updateList(list._id, listUpdated, dispatch);
         setIsClicked(true);
-        history.push('/lists');
     };
 
     return (
@@ -143,9 +142,7 @@ export default function Product() {
                                         >
                                             {movie.title}
                                         </option>
-                                    ) : (
-                                        <option>empty</option>
-                                    )
+                                    ) : null
                                 )}
                             </select>
                         </div>

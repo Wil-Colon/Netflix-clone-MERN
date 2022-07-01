@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './listMovies.scss';
 import { Link } from 'react-router-dom';
+import listenForOutsideClicks from '../../utils/listenForOutsideClicks';
 import {
     PlayArrow,
     ThumbUpAltOutlined,
@@ -9,10 +10,32 @@ import {
 } from '@material-ui/icons';
 
 const ListItem = ({ movie, list }) => {
+    const [listening, setListening] = useState(false);
     const [delayHandler, setDelayHandler] = useState(null);
     const [trailerUrl, setTrailerUrl] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
+    const listItemLargeRef = useRef();
+
+    useEffect(
+        listenForOutsideClicks(
+            listening,
+            setListening,
+            listItemLargeRef,
+            setIsOpen
+        )
+    );
+
+    let distance;
+    const setRef = () => {
+        if (listItemLargeRef.current) {
+            distance = listItemLargeRef.current.getBoundingClientRect().left;
+
+            if (distance < 20) {
+                listItemLargeRef.current.style.transform = `translateX(${18}px)`;
+            }
+        }
+    };
 
     const [width, setWidth] = useState(window.innerWidth);
 
@@ -62,6 +85,7 @@ const ListItem = ({ movie, list }) => {
             className={'listItem'}
             onMouseEnter={() => {
                 handleMouseEnter(movie);
+                setRef();
             }}
             onMouseDown={() => {
                 isMobile && handleMouseEnter(movie);
@@ -76,6 +100,8 @@ const ListItem = ({ movie, list }) => {
                     className="listItemLarge"
                     onMouseLeave={() => handleMouseLeave()}
                     onClick={() => isMobile && handleMouseLeave()}
+                    ref={listItemLargeRef}
+                    onMouseOver={setRef()}
                 >
                     <img src={movie.img} alt={''} />
                     {trailerUrl ? (

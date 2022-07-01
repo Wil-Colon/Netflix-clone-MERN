@@ -31,9 +31,11 @@ const ListItem = ({ list }) => {
         <div className="list">
             <span className="listTitle">{list.title}</span>
             <Slider {...settings}>
-                {movies.map((movie) => (
-                    <ListMovies key={movie._id} movie={movie} list={list} />
-                ))}
+                {movies.map((movie) =>
+                    movie !== null ? (
+                        <ListMovies key={movie._id} movie={movie} list={list} />
+                    ) : null
+                )}
             </Slider>
         </div>
     );

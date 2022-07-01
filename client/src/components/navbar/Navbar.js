@@ -42,7 +42,16 @@ const Navbar = () => {
                     <div className="profile">
                         <ArrowDropDown className="icon" />
                         <div className="options">
-                            <span>Settings</span>
+                            {user.isAdmin && (
+                                <a
+                                    className="anchorTag"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    href="http://localhost:4000"
+                                >
+                                    <span>Settings</span>
+                                </a>
+                            )}
                             <span
                                 onClick={() => {
                                     dispatch(logout());

@@ -74,7 +74,7 @@ router.get('/find/:id', verify, async (req, res) => {
 });
 
 //GET RANDOM MOVIE (Featured movie)
-//GET api/movie/random (accepts query ?type)
+//GET api/movies/random (accepts query ?type)
 
 router.get('/random', verify, async (req, res) => {
     const type = req.query.type;

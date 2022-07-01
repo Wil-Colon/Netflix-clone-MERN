@@ -44,7 +44,6 @@ export default function NewList() {
         e.preventDefault();
         setIsClicked(true);
         createList(list, dispatch);
-        history.push('/lists');
     };
 
     return (
