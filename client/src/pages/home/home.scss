@@ -1,0 +1,18 @@
+* {
+    margin: 0;
+}
+
+.App {
+    background-color: #111;
+    overflow-x: hidden;
+    overflow-y: visible;
+}
+
+.home {
+    padding-right: 0px;
+    @media (max-width: 480px) {
+        top: 25px;
+        overflow: hidden;
+        padding-bottom: 30px;
+    }
+}

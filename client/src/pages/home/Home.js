@@ -1,4 +1,4 @@
-import './App.scss';
+import './home.scss';
 import Featured from '../../components/featured/Featured';
 import NavBar from '../../components/navbar/Navbar';
 import List from '../../components/list/List';
