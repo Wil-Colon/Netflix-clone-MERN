@@ -63,7 +63,6 @@ export default function Featured({ type, setGenre }) {
             <img src={content.img} alt="" />
             <div className="info">
                 <h1 className="banner_title">{content.title}</h1>
-                <img src={content.desc} alt="" />
                 <span className="desc">{truncate(content.desc, 100)}</span>
                 <div className="buttons">
                     <button className="play">

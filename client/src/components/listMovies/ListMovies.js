@@ -14,7 +14,6 @@ const ListItem = ({ movie, list }) => {
     const [delayHandler, setDelayHandler] = useState(null);
     const [trailerUrl, setTrailerUrl] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
-    const toggle = () => setIsOpen(!isOpen);
     const listItemLargeRef = useRef();
 
     useEffect(
@@ -56,15 +55,9 @@ const ListItem = ({ movie, list }) => {
     };
 
     const handleMouseEnter = (movie) => {
-        if (trailerUrl) {
-            setTrailerUrl('');
-        }
-        if (isOpen) {
-            handleMouseLeave();
-        }
         setDelayHandler(
             setTimeout(async () => {
-                toggle();
+                setIsOpen(true);
                 try {
                     setTrailerUrl(movie.trailer);
                 } catch (err) {

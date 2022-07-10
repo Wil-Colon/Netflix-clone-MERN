@@ -1,9 +1,10 @@
 import './login.scss';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { login } from '../../context/authContext/apiCalls';
 import { AuthContext } from '../../context/authContext/AuthContext';
 import { useForm } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
     const { state } = useLocation();
@@ -75,7 +76,10 @@ const Login = () => {
                         </p>
                     )}
                     <span>
-                        New to Netflix? <b>Sign up now.</b>
+                        New to Netflix?{' '}
+                        <b>
+                            <Link to="/register">Sign up now. </Link>
+                        </b>
                     </span>
                     <small>
                         This page is protected by Google reCAPTCHA to ensure

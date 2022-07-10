@@ -8,6 +8,11 @@ import { registerUser } from '../../context/authContext/apiCalls';
 const Register = () => {
     const { dispatch, error } = useContext(AuthContext);
     const navigate = useNavigate();
+    const [onClicked, setOnClicked] = useState({
+        click1: false,
+        click2: false,
+        click3: false,
+    });
 
     const [formData, setFormData] = useState({
         username: '',
@@ -77,9 +82,12 @@ const Register = () => {
                             placeholder="enter a username"
                             name="username"
                             onChange={handleChange}
+                            onClick={() => setOnClicked({ clicked1: true })}
                             value={formData.username}
                         />
-                        <button className="registerButton">Start Here</button>
+                        <button className="registerButton">
+                            {onClicked.clicked1 ? 'User Name' : 'Start Here'}
+                        </button>
                     </form>
                 ) : !userInfo.email ? (
                     <form className="input" onSubmit={handleSubmit(onSubmit2)}>
@@ -91,9 +99,12 @@ const Register = () => {
                             placeholder="email address"
                             name="email"
                             onChange={handleChange}
+                            onClick={() => setOnClicked({ clicked2: true })}
                             value={formData.email}
                         />
-                        <button className="registerButton">Get Started</button>
+                        <button className="registerButton">
+                            {onClicked.clicked2 ? 'Email' : 'Get Started'}
+                        </button>
                     </form>
                 ) : (
                     <form
@@ -110,10 +121,11 @@ const Register = () => {
                             placeholder="password"
                             name="password"
                             onChange={handleChange}
+                            onClick={() => setOnClicked({ clicked3: true })}
                             value={formData.password}
                         />
                         <button type="submit" className="registerButton">
-                            Start
+                            {onClicked.clicked3 ? 'Password' : 'Start'}
                         </button>
                     </form>
                 )}
@@ -142,7 +154,6 @@ const Register = () => {
                 )}
                 <span style={{ color: 'red' }}>
                     {' '}
-                    {console.log(error)}
                     {error && <p>user already exists</p>}
                 </span>
             </div>

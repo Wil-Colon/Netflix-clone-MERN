@@ -92,6 +92,9 @@
                         position: absolute;
                     }
                 }
+                @media (max-width: 480px) {
+                    min-width: 75px;
+                }
             }
         }
     }
