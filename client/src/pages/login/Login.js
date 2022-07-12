@@ -1,5 +1,5 @@
 import './login.scss';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { login } from '../../context/authContext/apiCalls';
 import { AuthContext } from '../../context/authContext/AuthContext';
 import { useForm } from 'react-hook-form';
@@ -19,6 +19,10 @@ const Login = () => {
         handleSubmit,
         formState: { errors },
     } = useForm();
+    const [inputClicked, setInputClicked] = useState({
+        email: false,
+        password: false,
+    });
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -43,7 +47,7 @@ const Login = () => {
 
             <div className="container">
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    {state && <p style={{ color: 'red' }}>{state.msg}</p>}
+                    {state && <p className="newUser">{state.msg}</p>}
                     <h1>Sign In</h1>
                     <input
                         {...register('email', { required: true })}
@@ -52,9 +56,19 @@ const Login = () => {
                         type="email"
                         placeholder="Email or Phone number"
                         value={formData.email}
+                        onClick={() =>
+                            setInputClicked({
+                                ...inputClicked,
+                                email: true,
+                            })
+                        }
+                        style={{
+                            borderBottom:
+                                inputClicked.email && '2px solid #e87c03',
+                        }}
                     />
                     {errors.email && (
-                        <p style={{ color: 'red' }}>Email is required.</p>
+                        <p style={{ color: '#e87c03' }}>Email is required.</p>
                     )}
                     <input
                         {...register('password', { required: true })}
@@ -63,15 +77,27 @@ const Login = () => {
                         type="password"
                         placeholder="Password"
                         value={formData.password}
+                        onClick={() =>
+                            setInputClicked({
+                                ...inputClicked,
+                                password: true,
+                            })
+                        }
+                        style={{
+                            borderBottom:
+                                inputClicked.password && '2px solid #e87c03',
+                        }}
                     />
                     {errors.password && (
-                        <p style={{ color: 'red' }}>Password is required.</p>
+                        <p style={{ color: '#e87c03' }}>
+                            Password is required.
+                        </p>
                     )}
                     <button type="submit" className="loginButton">
                         Sign In
                     </button>
                     {user === null && isClicked && (
-                        <p style={{ color: 'red' }}>
+                        <p style={{ color: '#e87c03' }}>
                             Incorrect password or email
                         </p>
                     )}

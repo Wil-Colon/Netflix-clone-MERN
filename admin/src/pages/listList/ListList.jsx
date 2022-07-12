@@ -10,7 +10,7 @@ import { CircularProgress } from '@material-ui/core';
 import ResponsiveDialog from '../../components/responsiveDailog/ResponsiveDialog';
 
 export default function ListList() {
-    const { lists, dispatch } = useContext(ListContext);
+    const { lists, dispatch, isFetching } = useContext(ListContext);
 
     useEffect(() => {
         getLists(dispatch);
@@ -55,7 +55,7 @@ export default function ListList() {
             <Link to="/newList">
                 <button className="productAddButton">Create List</button>
             </Link>
-            {lists.length > 0 ? (
+            {!isFetching ? (
                 <DataGrid
                     rows={lists}
                     disableSelectionOnClick

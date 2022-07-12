@@ -101,6 +101,7 @@
 
         .buttons {
             display: flex;
+            z-index: 1;
 
             button {
                 padding: 10px 20px;

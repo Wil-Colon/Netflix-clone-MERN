@@ -11,7 +11,7 @@ import {
 } from '@material-ui/icons';
 
 export default function Topbar() {
-    const { dispatch } = useContext(AuthContext);
+    const { dispatch, user } = useContext(AuthContext);
 
     const handleClick = () => {
         dispatch(logout());
@@ -21,28 +21,13 @@ export default function Topbar() {
         <div className="topbar">
             <div className="topbarWrapper">
                 <div className="topLeft">
-                    <span className="logo">lamaadmin</span>
+                    <span className="logo">Netflix-clone Admin</span>
                 </div>
                 <div className="topRight">
-                    <div className="topbarIconContainer">
+                    <div className="topbarIconContainer" title="logout">
                         <ExitToApp onClick={handleClick} />
                     </div>
-                    <div className="topbarIconContainer">
-                        <NotificationsNone />
-                        <span className="topIconBadge">2</span>
-                    </div>
-                    <div className="topbarIconContainer">
-                        <Language />
-                        <span className="topIconBadge">2</span>
-                    </div>
-                    <div className="topbarIconContainer">
-                        <Settings />
-                    </div>
-                    <img
-                        src="https://images.pexels.com/photos/1526814/pexels-photo-1526814.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-                        alt=""
-                        className="topAvatar"
-                    />
+                    <img src={user.profilePic} alt="" className="topAvatar" />
                 </div>
             </div>
         </div>
