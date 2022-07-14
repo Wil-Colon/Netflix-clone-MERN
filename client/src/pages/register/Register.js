@@ -79,14 +79,14 @@ const Register = () => {
                                 maxLength: 15,
                             })}
                             type="text"
-                            placeholder="enter a username"
+                            placeholder="Enter a username"
                             name="username"
                             onChange={handleChange}
                             onClick={() => setOnClicked({ clicked1: true })}
                             value={formData.username}
                         />
                         <button className="registerButton">
-                            {onClicked.clicked1 ? 'User Name' : 'Start Here'}
+                            {onClicked.clicked1 ? 'Username' : 'Start Here'}
                         </button>
                     </form>
                 ) : !userInfo.email ? (
@@ -118,7 +118,7 @@ const Register = () => {
                                 maxLength: 15,
                             })}
                             type="password"
-                            placeholder="password"
+                            placeholder="Password"
                             name="password"
                             onChange={handleChange}
                             onClick={() => setOnClicked({ clicked3: true })}

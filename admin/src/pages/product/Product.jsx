@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import './product.css';
 import { Publish } from '@material-ui/icons';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { updateMovie } from '../../context/movieContext/apiCalls';
 import { MovieContext } from '../../context/movieContext/MovieContext';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
@@ -13,11 +13,10 @@ export default function Product() {
     const movieId = location.state._id;
     const { dispatch } = useContext(MovieContext);
     const [movieUpdated, setMovieUpdated] = useState(null);
-    const [trailer, setTrailer] = useState(null);
-    const [video, setVideo] = useState(null);
-    const [uploaded, setUploaded] = useState(0);
+    const [uploadSuccessful, setUploadSuccessful] = useState(false);
     const [progress, setProgress] = useState(null);
     const [isClicked, setIsClicked] = useState(false);
+    const [updatedFiles, setUpdatedFiles] = useState([]);
 
     const styles = {
         Active: {
@@ -35,6 +34,7 @@ export default function Product() {
     };
 
     const upload = (items) => {
+        console.log(items);
         items.forEach((item) => {
             const fileName = new Date().getTime() + item.label + item.file.name;
             const itemsRef = ref(storage, `items/${fileName}`);
@@ -54,7 +54,7 @@ export default function Product() {
                         setMovieUpdated((prev) => {
                             return { ...prev, [item.label]: url };
                         });
-                        setUploaded((prev) => prev + 1);
+                        setUploadSuccessful(true);
                     });
                 }
             );
@@ -63,10 +63,7 @@ export default function Product() {
 
     const handleUpload = (e) => {
         e.preventDefault();
-        upload([
-            { file: trailer, label: 'trailer' },
-            { file: video, label: 'video' },
-        ]);
+        upload(updatedFiles);
     };
 
     const handleSubmit = (e) => {
@@ -161,15 +158,38 @@ export default function Product() {
                             name="trailer"
                             type="file"
                             placeholder={movie.trailer}
-                            onChange={(e) => setTrailer(e.target.files[0])}
+                            onChange={(e) =>
+                                setUpdatedFiles((prevState) => [
+                                    ...prevState,
+                                    {
+                                        file: e.target.files[0],
+                                        label: 'trailer',
+                                    },
+                                ])
+                            }
                         />
                         <label>Video</label>
                         <input
                             name="video"
                             type="file"
                             placeholder={movie.video}
-                            onChange={(e) => setVideo(e.target.files[0])}
+                            onChange={(e) =>
+                                setUpdatedFiles((prevState) => [
+                                    ...prevState,
+                                    { file: e.target.files[0], label: 'video' },
+                                ])
+                            }
                         />
+                        <label>Is Series?</label>
+                        <select
+                            name="isSeries"
+                            id="isSeries"
+                            onChange={handleChange}
+                            placeholder={movie.isSeries.toString()}
+                        >
+                            <option value="false">No</option>
+                            <option value="true">Yes</option>
+                        </select>
                     </div>
                     <div className="productFormRight">
                         <div className="productUpload">
@@ -182,12 +202,22 @@ export default function Product() {
                                 <Publish />
                             </label>
                             <input
+                                name="img"
                                 type="file"
                                 id="file"
                                 style={{ display: 'none' }}
+                                onChange={(e) =>
+                                    setUpdatedFiles((prevState) => [
+                                        ...prevState,
+                                        {
+                                            file: e.target.files[0],
+                                            label: 'img',
+                                        },
+                                    ])
+                                }
                             />
                         </div>
-                        {uploaded === 2 ? (
+                        {uploadSuccessful ? (
                             <button
                                 className="addProductButton"
                                 onClick={handleSubmit}
@@ -198,7 +228,7 @@ export default function Product() {
                             >
                                 {!isClicked ? 'Update Movie' : 'Movie updated!'}
                             </button>
-                        ) : trailer || video ? (
+                        ) : updatedFiles.length > 0 ? (
                             <button
                                 className="addProductButton"
                                 onClick={handleUpload}

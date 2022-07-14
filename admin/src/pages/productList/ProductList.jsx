@@ -17,6 +17,7 @@ export default function ProductList() {
     const handleDelete = (id) => {
         deleteMovie(id, dispatch);
     };
+    console.log(movies);
 
     const columns = [
         { field: '_id', headerName: 'ID', width: 90 },

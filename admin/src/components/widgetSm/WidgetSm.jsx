@@ -2,6 +2,7 @@ import './widgetSm.css';
 import { Visibility } from '@material-ui/icons';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export default function WidgetSm() {
     const [newUsers, setNewUsers] = useState([]);
@@ -27,7 +28,7 @@ export default function WidgetSm() {
 
     return (
         <div className="widgetSm">
-            <span className="widgetSmTitle">New Join Members</span>
+            <span className="widgetSmTitle">Newly Joined Members</span>
             <ul className="widgetSmList">
                 {newUsers.length > 0 ? (
                     newUsers.map((user, i) => (
@@ -47,7 +48,14 @@ export default function WidgetSm() {
                             </div>
                             <button className="widgetSmButton">
                                 <Visibility className="widgetSmIcon" />
-                                Display
+                                <Link
+                                    to={{
+                                        pathname: `/user/${user._id}`,
+                                        state: user,
+                                    }}
+                                >
+                                    Display
+                                </Link>
                             </button>
                         </li>
                     ))
