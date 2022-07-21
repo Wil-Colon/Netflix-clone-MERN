@@ -14,7 +14,7 @@ function App({ type }) {
         const getRandomLists = async () => {
             try {
                 const res = await axios.get(
-                    `lists${type ? '?type=' + type : ''}${
+                    `/api/lists${type ? '?type=' + type : ''}${
                         genre ? '&genre=' + genre : ''
                     }`,
                     {
@@ -28,6 +28,7 @@ function App({ type }) {
                 );
                 setIsLoading(false);
                 setLists(res.data);
+                console.log(res.data);
             } catch (err) {
                 console.log(err);
             }
@@ -39,8 +40,11 @@ function App({ type }) {
         <div className="home">
             <NavBar />
             <Featured type={type} setGenre={setGenre} />
-            {!isLoading &&
-                lists.map((list) => <List key={list._id} list={list} />)}
+            {!isLoading && lists.length > 0 ? (
+                lists?.map((list) => <List key={list._id} list={list} />)
+            ) : (
+                <p>loading...</p>
+            )}
         </div>
     );
 }
