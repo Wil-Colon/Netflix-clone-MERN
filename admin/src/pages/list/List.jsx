@@ -26,13 +26,17 @@ export default function Product() {
 
     useEffect(() => {
         const fetchMovie = async (id) => {
-            const result = await axios.get(`/movies/find/${id}`, {
-                headers: {
-                    token:
-                        'Bearer ' +
-                        JSON.parse(localStorage.getItem('user')).accessToken,
-                },
-            });
+            const result = await axios.get(
+                `https://netflix-mern-client.herokuapp.com/api/movies/find/${id}`,
+                {
+                    headers: {
+                        token:
+                            'Bearer ' +
+                            JSON.parse(localStorage.getItem('user'))
+                                .accessToken,
+                    },
+                }
+            );
             setMovie((prevMovie) => [...prevMovie, result.data]);
         };
 

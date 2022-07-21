@@ -14,13 +14,16 @@ import axios from 'axios';
 export const getUsers = async (dispatch) => {
     dispatch(getUsersStart());
     try {
-        const res = await axios.get('/users', {
-            headers: {
-                token:
-                    'Bearer ' +
-                    JSON.parse(localStorage.getItem('user')).accessToken,
-            },
-        });
+        const res = await axios.get(
+            'https://netflix-mern-client.herokuapp.com/api/users',
+            {
+                headers: {
+                    token:
+                        'Bearer ' +
+                        JSON.parse(localStorage.getItem('user')).accessToken,
+                },
+            }
+        );
         dispatch(getUsersSuccess(res.data));
     } catch (err) {
         dispatch(getUsersFailure());
@@ -31,13 +34,16 @@ export const getUsers = async (dispatch) => {
 export const deleteUser = async (id, dispatch) => {
     dispatch(deleteUserStart());
     try {
-        await axios.delete('/users/' + id, {
-            headers: {
-                token:
-                    'Bearer ' +
-                    JSON.parse(localStorage.getItem('user')).accessToken,
-            },
-        });
+        await axios.delete(
+            'https://netflix-mern-client.herokuapp.com/api/users/' + id,
+            {
+                headers: {
+                    token:
+                        'Bearer ' +
+                        JSON.parse(localStorage.getItem('user')).accessToken,
+                },
+            }
+        );
         dispatch(deleteUserSuccess(id));
     } catch (err) {
         dispatch(deleteUserFailure());
@@ -48,13 +54,17 @@ export const deleteUser = async (id, dispatch) => {
 export const updateUser = async (_id, formData, dispatch) => {
     dispatch(updateUserStart());
     try {
-        const res = await axios.put('/users/' + _id, formData, {
-            headers: {
-                token:
-                    'Bearer ' +
-                    JSON.parse(localStorage.getItem('user')).accessToken,
-            },
-        });
+        const res = await axios.put(
+            'https://netflix-mern-client.herokuapp.com/api/users/' + _id,
+            formData,
+            {
+                headers: {
+                    token:
+                        'Bearer ' +
+                        JSON.parse(localStorage.getItem('user')).accessToken,
+                },
+            }
+        );
         dispatch(updateUserSuccess(res.data));
     } catch (err) {
         dispatch(updateUserFailure());

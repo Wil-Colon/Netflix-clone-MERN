@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import './product.css';
 import { Publish } from '@material-ui/icons';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { updateMovie } from '../../context/movieContext/apiCalls';
 import { MovieContext } from '../../context/movieContext/MovieContext';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
