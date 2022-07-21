@@ -82,7 +82,7 @@ export default function BasicMenu({ type, logout, user, dispatch }) {
                                     className="anchorTag"
                                     target="_blank"
                                     rel="noreferrer"
-                                    href="http://localhost:4000"
+                                    href="https://netflix-clone-mern-admin.vercel.app/"
                                 >
                                     <span
                                         className="settings-btn"

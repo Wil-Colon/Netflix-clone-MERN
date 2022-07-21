@@ -32,11 +32,14 @@ export default function Home() {
             setUserToken(JSON.parse(localStorage.getItem('user')).accessToken);
             const getStats = async () => {
                 try {
-                    const res = await axios.get('/users/stats', {
-                        headers: {
-                            token: 'Bearer ' + userToken,
-                        },
-                    });
+                    const res = await axios.get(
+                        'https://netflix-mern-client.herokuapp.com/api/users/stats',
+                        {
+                            headers: {
+                                token: 'Bearer ' + userToken,
+                            },
+                        }
+                    );
                     const statsList = res.data.sort(function (a, b) {
                         return a._id - b._id;
                     });
