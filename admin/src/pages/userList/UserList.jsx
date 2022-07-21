@@ -6,6 +6,7 @@ import { UserContext } from '../../context/userContext/UserContext';
 import { useContext } from 'react';
 import { getUsers, deleteUser } from '../../context/userContext/apiCalls';
 import ResponsiveDailog from '../../components/responsiveDailog/ResponsiveDialog';
+import { CircularProgress } from '@material-ui/core';
 
 export default function UserList() {
     const { users, isFetching, dispatch } = useContext(UserContext);
@@ -72,7 +73,7 @@ export default function UserList() {
 
     return (
         <div className="userList">
-            {!isFetching && (
+            {!isFetching ? (
                 <DataGrid
                     rows={users}
                     disableSelectionOnClick
@@ -80,6 +81,16 @@ export default function UserList() {
                     pageSize={8}
                     checkboxSelection
                     getRowId={(r) => r._id}
+                />
+            ) : (
+                <CircularProgress
+                    style={{
+                        width: '40px',
+                        height: '40px',
+                        display: 'block',
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                    }}
                 />
             )}
         </div>
