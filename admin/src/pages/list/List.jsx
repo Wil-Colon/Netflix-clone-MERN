@@ -1,4 +1,4 @@
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './list.css';
 import { useState, useEffect, useContext } from 'react';
 import { updateList } from '../../context/listContext/apiCalls';
@@ -12,7 +12,6 @@ export default function Product() {
     const [isClicked, setIsClicked] = useState(false);
     const [movies, setMovie] = useState([]);
     const { dispatch } = useContext(ListContext);
-    const history = useHistory();
 
     const styles = {
         Active: {
