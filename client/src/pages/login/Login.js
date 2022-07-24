@@ -1,5 +1,5 @@
 import './login.scss';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { login } from '../../context/authContext/apiCalls';
 import { AuthContext } from '../../context/authContext/AuthContext';
 import { useForm } from 'react-hook-form';
@@ -56,10 +56,16 @@ const Login = () => {
                         type="email"
                         placeholder="Email or Phone number"
                         value={formData.email}
-                        onClick={() =>
+                        onFocus={() =>
                             setInputClicked({
                                 ...inputClicked,
                                 email: true,
+                            })
+                        }
+                        onBlur={() =>
+                            setInputClicked({
+                                ...inputClicked,
+                                email: false,
                             })
                         }
                         style={{
@@ -77,10 +83,16 @@ const Login = () => {
                         type="password"
                         placeholder="Password"
                         value={formData.password}
-                        onClick={() =>
+                        onFocus={() =>
                             setInputClicked({
                                 ...inputClicked,
                                 password: true,
+                            })
+                        }
+                        onBlur={() =>
+                            setInputClicked({
+                                ...inputClicked,
+                                password: false,
                             })
                         }
                         style={{
