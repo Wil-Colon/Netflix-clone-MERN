@@ -56,18 +56,12 @@ const Login = () => {
                         type="email"
                         placeholder="Email or Phone number"
                         value={formData.email}
-                        onFocus={() =>
+                        onFocus={() => {
                             setInputClicked({
-                                ...inputClicked,
                                 email: true,
-                            })
-                        }
-                        onBlur={() =>
-                            setInputClicked({
-                                ...inputClicked,
-                                email: false,
-                            })
-                        }
+                                password: false,
+                            });
+                        }}
                         style={{
                             borderBottom:
                                 inputClicked.email && '2px solid #e87c03',
@@ -83,18 +77,12 @@ const Login = () => {
                         type="password"
                         placeholder="Password"
                         value={formData.password}
-                        onFocus={() =>
+                        onFocus={() => {
                             setInputClicked({
-                                ...inputClicked,
+                                email: false,
                                 password: true,
-                            })
-                        }
-                        onBlur={() =>
-                            setInputClicked({
-                                ...inputClicked,
-                                password: false,
-                            })
-                        }
+                            });
+                        }}
                         style={{
                             borderBottom:
                                 inputClicked.password && '2px solid #e87c03',
