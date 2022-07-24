@@ -4,6 +4,7 @@
     "description": "",
     "main": "index.js",
     "dependencies": {
+        "concurrently": "^7.3.0",
         "cors": "^2.8.5",
         "crypto-js": "^4.1.1",
         "dotenv": "^16.0.0",
@@ -16,7 +17,8 @@
     "devDependencies": {},
     "scripts": {
         "heroku-postbuild": "npm install --prefix client && npm run build --prefix client",
-        "start": "node server"
+        "start": "nodemon server",
+        "dev": "concurrently \"npm run start\" \"cd client && npm run start\""
     },
     "author": "",
     "license": "ISC"
