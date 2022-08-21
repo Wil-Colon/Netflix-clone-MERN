@@ -33,3 +33,4 @@ client/src/context/authContext/apiCalls.js
 client/src/pages/home/Home.js
 server.js
 package.json
+.env
