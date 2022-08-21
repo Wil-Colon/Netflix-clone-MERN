@@ -12,7 +12,7 @@ const ListItem = ({ list }) => {
 
     useEffect(() => {
         const fetchMovie = async (id) => {
-            const result = await axios.get(`/api/movies/find/${id}`, {
+            const result = await axios.get(`movies/find/${id}`, {
                 headers: {
                     token:
                         'Bearer ' +

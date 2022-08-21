@@ -26,3 +26,11 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 node_modules
+client/package.json
+client/src/components/featured/Featured.js
+client/src/components/list/List.js
+client/src/context/authContext/apiCalls.js
+client/src/pages/home/Home.js
+server.js
+package.json
+.env
