@@ -1,0 +1,3 @@
+in order to make this run...you have to run client admin and server locally.
+
+Admin endpoint are all pointing to towards old heroku app. this needs to fe changed to work.

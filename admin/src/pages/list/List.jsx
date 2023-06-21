@@ -26,7 +26,7 @@ export default function Product() {
     useEffect(() => {
         const fetchMovie = async (id) => {
             const result = await axios.get(
-                `https://netflix-mern-client.herokuapp.com/api/movies/find/${id}`,
+                `http://localhost:5000/api/movies/find/${id}`,
                 {
                     headers: {
                         token:

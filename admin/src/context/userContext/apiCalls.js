@@ -15,7 +15,7 @@ export const getUsers = async (dispatch) => {
     dispatch(getUsersStart());
     try {
         const res = await axios.get(
-            'https://netflix-mern-client.herokuapp.com/api/users',
+            'http://localhost:5000/api/users',
             {
                 headers: {
                     token:
@@ -35,7 +35,7 @@ export const deleteUser = async (id, dispatch) => {
     dispatch(deleteUserStart());
     try {
         await axios.delete(
-            'https://netflix-mern-client.herokuapp.com/api/users/' + id,
+            'http://localhost:5000/api/users/' + id,
             {
                 headers: {
                     token:
@@ -55,7 +55,7 @@ export const updateUser = async (_id, formData, dispatch) => {
     dispatch(updateUserStart());
     try {
         const res = await axios.put(
-            'https://netflix-mern-client.herokuapp.com/api/users/' + _id,
+            'http://localhost:5000/api/users/' + _id,
             formData,
             {
                 headers: {

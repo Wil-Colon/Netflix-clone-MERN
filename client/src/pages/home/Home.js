@@ -14,7 +14,7 @@ function App({ type }) {
         const getRandomLists = async () => {
             try {
                 const res = await axios.get(
-                    `lists${type ? '?type=' + type : ''}${
+                    `http://localhost:5000/api/lists${type ? '?type=' + type : ''}${
                         genre ? '&genre=' + genre : ''
                     }`,
                     {
@@ -28,7 +28,6 @@ function App({ type }) {
                 );
                 setIsLoading(false);
                 setLists(res.data);
-                console.log(res.data);
             } catch (err) {
                 console.log(err);
             }

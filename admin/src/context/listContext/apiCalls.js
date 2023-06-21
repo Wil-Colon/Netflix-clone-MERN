@@ -18,7 +18,7 @@ export const getLists = async (dispatch) => {
     dispatch(getListsStart());
     try {
         const res = await axios.get(
-            'https://netflix-mern-client.herokuapp.com/api/lists',
+            'http://localhost:5000/api/lists',
             {
                 headers: {
                     token:
@@ -37,7 +37,7 @@ export const getLists = async (dispatch) => {
 export const createList = async (list, dispatch) => {
     dispatch(createListStart());
     try {
-        const res = await axios.post('/lists', list, {
+        const res = await axios.post('http://localhost:5000/lists', list, {
             headers: {
                 token:
                     'Bearer ' +
@@ -55,7 +55,7 @@ export const deleteList = async (id, dispatch) => {
     dispatch(deleteListStart());
     try {
         await axios.delete(
-            'https://netflix-mern-client.herokuapp.com/api/lists/' + id,
+            'http://localhost:5000/api/lists/' + id,
             {
                 headers: {
                     token:
@@ -75,7 +75,7 @@ export const updateList = async (listId, listUpdated, dispatch) => {
     dispatch(updateListStart());
     try {
         const res = await axios.put(
-            'https://netflix-mern-client.herokuapp.com/api/lists/' + listId,
+            'http://localhost:5000/api/lists/' + listId,
             listUpdated,
             {
                 headers: {

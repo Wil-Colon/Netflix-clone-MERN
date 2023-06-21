@@ -18,7 +18,7 @@ export const getMovies = async (dispatch) => {
     dispatch(getMoviesStart());
     try {
         const res = await axios.get(
-            'https://netflix-mern-client.herokuapp.com/api/movies',
+            'http://localhost:5000/api/movies',
             {
                 headers: {
                     token:
@@ -38,7 +38,7 @@ export const createMovie = async (movie, dispatch) => {
     dispatch(createMovieStart());
     try {
         const res = await axios.post(
-            'https://netflix-mern-client.herokuapp.com/api/movies',
+            'http://localhost:5000/api/movies',
             movie,
             {
                 headers: {
@@ -59,7 +59,7 @@ export const deleteMovie = async (id, dispatch) => {
     dispatch(deleteMovieStart());
     try {
         await axios.delete(
-            'https://netflix-mern-client.herokuapp.com/api/movies/' + id,
+            'http://localhost:5000/api/movies/' + id,
             {
                 headers: {
                     token:
@@ -79,7 +79,7 @@ export const updateMovie = async (movieId, movieUpdated, dispatch) => {
     dispatch(updateMovieStart());
     try {
         const res = await axios.put(
-            'https://netflix-mern-client.herokuapp.com/api/movies/' + movieId,
+            'http://localhost:5000/api/movies/' + movieId,
             movieUpdated,
             {
                 headers: {

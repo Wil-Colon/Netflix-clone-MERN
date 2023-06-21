@@ -12,7 +12,7 @@ export const login = async (user, dispatch) => {
     dispatch(loginStart());
 
     try {
-        const res = await axios.post('auth/login', user);
+        const res = await axios.post('http://localhost:5000/api/auth/login', user);
         dispatch(loginSuccess(res.data));
     } catch (err) {
         dispatch(loginFailure());
@@ -22,7 +22,7 @@ export const login = async (user, dispatch) => {
 export const registerUser = async (user, dispatch) => {
     dispatch(registerStart());
     try {
-        const res = await axios.post('auth/register', user);
+        const res = await axios.post('http://localhost:5000/api/auth/register', user);
         dispatch(registerSuccess(res.data));
     } catch (err) {
         dispatch(registerFailure());
