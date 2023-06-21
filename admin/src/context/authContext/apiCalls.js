@@ -6,7 +6,7 @@ export const login = async (user, dispatch) => {
 
     try {
         const res = await axios.post(
-            'https://netflix-mern-client.herokuapp.com/api/auth/login',
+            'https://netflix-mern.onrender.com/api/auth/login',
             user
         );
         res.data.isAdmin && dispatch(loginSuccess(res.data));

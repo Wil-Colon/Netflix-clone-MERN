@@ -11,7 +11,7 @@ export default function WidgetSm() {
         const getNewUsers = async () => {
             try {
                 const res = await axios.get(
-                    'https://netflix-mern-client.herokuapp.com/api/users?new=true',
+                    'https://netflix-mern.onrender.com/api/users?new=true',
                     {
                         headers: {
                             token:

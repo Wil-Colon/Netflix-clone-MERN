@@ -33,7 +33,7 @@ export default function Home() {
             const getStats = async () => {
                 try {
                     const res = await axios.get(
-                        'https://netflix-mern-client.herokuapp.com/api/users/stats',
+                        'https://netflix-mern.onrender.com/api/users/stats',
                         {
                             headers: {
                                 token: 'Bearer ' + userToken,
