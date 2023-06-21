@@ -28,7 +28,6 @@ function App({ type }) {
                 );
                 setIsLoading(false);
                 setLists(res.data);
-                console.log(res.data);
             } catch (err) {
                 console.log(err);
             }
