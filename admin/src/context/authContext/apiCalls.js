@@ -6,7 +6,7 @@ export const login = async (user, dispatch) => {
 
     try {
         const res = await axios.post(
-            'https://netflix-mern.onrender.com/api/auth/login',
+            'https://clone-moviesite.onrender.com/api/auth/login',
             user
         );
         res.data.isAdmin && dispatch(loginSuccess(res.data));

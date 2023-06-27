@@ -15,7 +15,7 @@ export const getUsers = async (dispatch) => {
     dispatch(getUsersStart());
     try {
         const res = await axios.get(
-            'https://netflix-mern.onrender.com/api/users',
+            'https://clone-moviesite.onrender.com/api/users',
             {
                 headers: {
                     token:
@@ -35,7 +35,7 @@ export const deleteUser = async (id, dispatch) => {
     dispatch(deleteUserStart());
     try {
         await axios.delete(
-            'https://netflix-mern.onrender.com/api/users/' + id,
+            'https://clone-moviesite.onrender.com/api/users/' + id,
             {
                 headers: {
                     token:
@@ -55,7 +55,7 @@ export const updateUser = async (_id, formData, dispatch) => {
     dispatch(updateUserStart());
     try {
         const res = await axios.put(
-            'https://netflix-mern.onrender.com/api/users/' + _id,
+            'https://clone-moviesite.onrender.com/api/users/' + _id,
             formData,
             {
                 headers: {

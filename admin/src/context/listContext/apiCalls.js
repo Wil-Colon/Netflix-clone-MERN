@@ -18,7 +18,7 @@ export const getLists = async (dispatch) => {
     dispatch(getListsStart());
     try {
         const res = await axios.get(
-            'https://netflix-mern.onrender.com/api/lists',
+            'https://clone-moviesite.onrender.com/api/lists',
             {
                 headers: {
                     token:
@@ -38,7 +38,7 @@ export const createList = async (list, dispatch) => {
     dispatch(createListStart());
     try {
         const res = await axios.post(
-            'https://netflix-mern.onrender.com/api/lists',
+            'https://clone-moviesite.onrender.com/api/lists',
             list,
             {
                 headers: {
@@ -59,7 +59,7 @@ export const deleteList = async (id, dispatch) => {
     dispatch(deleteListStart());
     try {
         await axios.delete(
-            'https://netflix-mern.onrender.com/api/lists/' + id,
+            'https://clone-moviesite.onrender.com/api/lists/' + id,
             {
                 headers: {
                     token:
@@ -79,7 +79,7 @@ export const updateList = async (listId, listUpdated, dispatch) => {
     dispatch(updateListStart());
     try {
         const res = await axios.put(
-            'https://netflix-mern.onrender.com/api/lists/' + listId,
+            'https://clone-moviesite.onrender.com/lists/' + listId,
             listUpdated,
             {
                 headers: {

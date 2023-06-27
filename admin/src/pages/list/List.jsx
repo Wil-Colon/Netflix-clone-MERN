@@ -26,7 +26,7 @@ export default function Product() {
     useEffect(() => {
         const fetchMovie = async (id) => {
             const result = await axios.get(
-                `https://netflix-mern.onrender.com/api/movies/find/${id}`,
+                `https://clone-moviesite.onrender.com/api/movies/find/${id}`,
                 {
                     headers: {
                         token:
