@@ -6,6 +6,9 @@ const path = require('path');
 const cors = require('cors');
 
 app.use(cors());
+app.use(cors({
+    origin: 'https://netflix-mern.onrender.com/'
+}));
 
 app.use(express.json());
 
